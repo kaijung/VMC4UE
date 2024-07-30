@@ -30,16 +30,13 @@ UObject *UVMC4UEBoneMappingAssetFactory::FactoryCreateText(UClass *InClass, UObj
 {
     FString TextData = FString(Buffer);
 
-    UVMC4UEVRMMapping *NewAsset = CastChecked<UVMC4UEVRMMapping>(StaticConstructObject_Internal(InClass, 
-        InParent, 
-        InName, 
-        Flags,        
-        EInternalObjectFlags::None,
-        nullptr,
-        false,
-        nullptr,
-        false));
-    
+    FStaticConstructObjectParameters Params(InClass);
+    Params.Outer = InParent;
+    Params.Name = InName;
+    Params.SetFlags = Flags;
+
+    UVMC4UEVRMMapping *NewAsset = CastChecked<UVMC4UEVRMMapping>(StaticConstructObject_Internal(Params));
+
     if (!IsValid(NewAsset))
     {
         return nullptr;
